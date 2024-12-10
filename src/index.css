@@ -5,3 +5,6 @@
   -moz-osx-font-smoothing:grayscale;
   font-family: 'NHaasGrotesKDSPro-65MD' !important;
 }*/
+*{
+  scroll-behavior: smooth;
+}

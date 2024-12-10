@@ -1,0 +1,30 @@
+.navbar-brand-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    position: relative;
+}  
+.navbar-nav .nav-item .btn {
+    margin: 5px 10px; 
+}  
+@media (min-width: 992px) {
+   .navbar-nav {
+      position: absolute;
+      left: 0;
+      top: 0;
+      display: flex;
+    }
+} 
+@media (max-width: 768px) {
+   .navbar-collapse {
+      z-index: 2;
+    }
+    .navbar-toggler {
+        width: 100px;
+        z-index: 3;
+    }
+    
+    .nav-item{
+        margin-top: 0px;
+    }
+}

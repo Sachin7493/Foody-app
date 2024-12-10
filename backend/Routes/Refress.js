@@ -12,7 +12,7 @@ router.post("/refress", (req, res) => {
     const newToken = jwt.sign(
       { email: user.email, name: user.name },
       process.env.KEY,
-      { expiresIn: "1h" }
+      { expiresIn: "5h" }
     );
     res.cookie("token", newToken, { httpOnly: true, maxAge: 36000 });
     res.json({ status: true, token: newToken });

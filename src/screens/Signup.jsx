@@ -1,12 +1,15 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Axios from "axios";
+import styles from "./Logout.module.css";
+import "@fortawesome/fontawesome-free/css/all.min.css";
 
 const Signup = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [location, setLocation] = useState("");
+  const [showPassword, setShowPassword] = useState("false");
 
   const navigate = useNavigate();
 
@@ -29,61 +32,52 @@ const Signup = () => {
   };
   return (
     <>
-      <div className="container">
-        <form onSubmit={handleSubmit}>
-          <div className="mb-3">
-            <label htmlFor="name" className="form-label">
-              Name
-            </label>
+      <div className={styles.container}>
+        <form className={styles.form} onSubmit={handleSubmit}>
+          <h2 className={styles.main}>SignUp</h2>
+          <label htmlFor="username">Username:</label>
+          <input
+            type="text"
+            placeholder="User"
+            onChange={(e) => setName(e.target.value)}
+          />
+          <label htmlFor="email">Email:</label>
+          <input
+            type="email"
+            autoComplete="off"
+            placeholder="Email"
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <label htmlFor="Password">Password:</label>
+          <div className={styles.passwordContainer}>
             <input
-              type="text"
-              className="form-control"
-              onChange={(e) => setName(e.target.value)}
-            />
-          </div>
-          <div className="mb-3">
-            <label htmlFor="exampleInputEmail1" className="form-label">
-              Email address
-            </label>
-            <input
-              type="email"
-              className="form-control"
-              autoComplete="off"
-              id="exampleInputEmail1"
-              aria-describedby="emailHelp"
-              onChange={(e) => setEmail(e.target.value)}
-            />
-            <div id="emailHelp" className="form-text">
-              We'll never share your email with anyone else.
-            </div>
-          </div>
-          <div className="mb-3">
-            <label htmlFor="exampleInputPassword1" className="form-label">
-              Password
-            </label>
-            <input
-              type="password"
-              className="form-control"
-              id="exampleInputPassword1"
+              type={showPassword ? "text" : "password"}
+              placeholder="********"
               onChange={(e) => setPassword(e.target.value)}
             />
+            <span
+              className={styles.toggleIcon}
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              {showPassword ? (
+                <i className="fas fa-eye-slash"></i>
+              ) : (
+                <i className="fas fa-eye"></i>
+              )}
+            </span>
           </div>
-          <div className="mb-3">
-            <label htmlFor="name" className="form-label">
-              Address
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              onChange={(e) => setLocation(e.target.value)}
-            />
-          </div>
-          <button type="submit" className="m-3 btn btn-success">
+          <label htmlFor="name">Address:</label>
+          <input
+            type="text"
+            placeholder="Enter Address..."
+            onChange={(e) => setLocation(e.target.value)}
+          />
+          <button className={styles.nom} type="submit">
             Submit
           </button>
-          <Link to="/login" className="m-3 btn btn-danger">
-            Already a user
-          </Link>
+          <p>
+            Have an Account? <Link to="/login">Login</Link>
+          </p>
         </form>
       </div>
     </>

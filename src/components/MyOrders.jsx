@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import styles from "./MyOrder.module.css";
 
 const MyOrders = () => {
   const [orders, setOrders] = useState([]);
@@ -52,51 +53,37 @@ const MyOrders = () => {
     navigate("/");
   };
   return (
-    <div className="container mt-5">
+    <div className={styles.container}>
       <h3>My Orders:</h3>
       {orders.length === 0 ? (
         <p>You have no orders.</p>
       ) : (
-        <ul className="list-group">
+        <ul className={styles.list}>
           {orders.map((order, index) => (
-            <li
-              key={index}
-              className="list-group-item d-flex align-items-center justify-content-between"
-            >
-              <div className="d-flex align-items-center flex-grow-1">
-                <img
-                  src={order.img}
-                  alt={order.name}
-                  style={{
-                    width: "120px",
-                    height: "120px",
-                    marginRight: "10px",
-                  }}
-                />
+            <li key={index} className={styles.listItem}>
+              <div className={styles.order}>
+                <img src={order.img} alt={order.name} />
               </div>
-              <div className="d-flex flex-column align-items-start flex-grow-1">
+              <div className={styles.order2}>
                 <h5>{order.name}</h5>
                 <p>Quantity:{order.qty}</p>
                 <p>Size:{order.size}</p>
                 <p>Price: ₹{order.price}</p>
-                <button
-                  className="btn btn-danger"
-                  onClick={() => handleCancel(order.name)}
-                  style={{
-                    marginLeft: "auto",
-                    position: "relative",
-                    top: "-70px",
-                  }}
-                >
-                  Cancel
-                </button>
+                <div className={styles.cancelContainer}>
+                  <button
+                    className={styles.btn}
+                    onClick={() => handleCancel(order.name)}
+                  >
+                    Cancel
+                  </button>
+                </div>
               </div>
             </li>
           ))}
         </ul>
       )}
-      <div className="mt-4 d-flex justify-content-center">
-        <button className="btn btn-primary" onClick={handleGoToShopping}>
+      <div className={styles.btn2}>
+        <button className={styles.primary} onClick={handleGoToShopping}>
           Go to Shopping
         </button>
       </div>

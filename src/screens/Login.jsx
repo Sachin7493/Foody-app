@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Axios from "axios";
+import styles from "./Log.module.css";
+import "@fortawesome/fontawesome-free/css/all.min.css";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   const navigate = useNavigate();
   Axios.defaults.withCredentials = true;
@@ -26,40 +29,42 @@ const Login = () => {
   };
   return (
     <>
-      <div className="container">
-        <form onSubmit={handleSubmit}>
-          <div className="mb-3">
-            <label htmlFor="exampleInputEmail1" className="form-label">
-              Email address
-            </label>
+      <div className={styles.container}>
+        <form className={styles.form} onSubmit={handleSubmit}>
+          <h2 className={styles.main}>Login</h2>
+          <label htmlFor="email">Email:</label>
+          <input
+            type="email"
+            autoComplete="off"
+            placeholder="email"
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <label htmlFor="Password">Password:</label>
+          <div className={styles.passwordContainer}>
             <input
-              type="email"
-              className="form-control"
-              id="exampleInputEmail1"
-              aria-describedby="emailHelp"
-              onChange={(e) => setEmail(e.target.value)}
-            />
-            <div id="emailHelp" className="form-text">
-              We'll never share your email with anyone else.
-            </div>
-          </div>
-          <div className="mb-3">
-            <label htmlFor="exampleInputPassword1" className="form-label">
-              Password
-            </label>
-            <input
-              type="password"
-              className="form-control"
-              id="exampleInputPassword1"
+              type={showPassword ? "text" : "password"}
+              placeholder="********"
+              id="Password"
               onChange={(e) => setPassword(e.target.value)}
             />
+            <span
+              className={styles.toggleIcon}
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              {showPassword ? (
+                <i className="fas fa-eye-slash"></i>
+              ) : (
+                <i className="fas fa-eye"></i>
+              )}
+            </span>
           </div>
-          <button type="submit" className="m-3 btn btn-success">
+          <button className={styles.nom} type="submit">
             Submit
           </button>
-          <Link to="/createuser" className="m-3 btn btn-danger">
-            I'm a new user
-          </Link>
+          <Link to="/forgotPassword">Forgot Password?</Link>
+          <p>
+            Don't hava an Account? <Link to="/createuser">Signup</Link>
+          </p>
         </form>
       </div>
     </>

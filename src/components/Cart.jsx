@@ -3,6 +3,7 @@ import { useCart, useDispatchCart } from "./ContextReducer";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Modal from "react-modal";
+import styles from "./Cart.module.css";
 
 const Cart = () => {
   const items = useCart();
@@ -22,32 +23,6 @@ const Cart = () => {
       return total + price;
     }, 0);
   };
-  /*const handleCheckout = async () => {
-    try {
-      const response = await axios.post(
-        "http://localhost:4000/api/orderData",
-        {
-          orderData: items,
-        },
-        {
-          withCredentials: true,
-        }
-      );
-      if (response.status === 200) {
-        alert("Order placed successfully!");
-        dispatch({ type: "CLEAR" });
-        navigate("/");
-      }
-    } catch (error) {
-      console.error("Error placing order:", error);
-      if (error.response?.status === 401) {
-        alert("Session expired.Please log in again");
-        navigate("/login");
-      } else {
-        alert("Failed to place order. Please try again.");
-      }
-    }
-  };*/
   const handleCheckout = () => {
     setPaymentOpen(true);
   };
@@ -56,7 +31,6 @@ const Cart = () => {
       alert("please select a payment method.");
       return;
     }
-    //setPaymentOpen(false);
     setPaymentSuccessful(true);
     try {
       const response = await axios.post(
@@ -87,19 +61,16 @@ const Cart = () => {
     navigate("/");
   };
   return (
-    <div className="container mt-5">
-      <h3>My Cart:</h3>
+    <div className={styles.container}>
+      <h3 className={styles.main}>My Cart:</h3>
       {items.length === 0 ? (
         <p>Your cart is empty.</p>
       ) : (
         <div>
-          <ul className="list-group">
+          <ul className={styles.list}>
             {items.map((item, index) => (
-              <li
-                key={index}
-                className="list-group-item d-flex justify-content-between align-items-center"
-              >
-                <div className="d-flex align-items-center">
+              <li key={index} className={styles.listItem}>
+                <div>
                   <img
                     src={item.img}
                     alt={item.name}
@@ -117,7 +88,7 @@ const Cart = () => {
                   <p>Price:₹{item.price}</p>
                 </div>
                 <button
-                  className="btn btn-danger"
+                  className={styles.remove}
                   onClick={() => handleRemove(index)}
                 >
                   Remove
@@ -125,18 +96,16 @@ const Cart = () => {
               </li>
             ))}
           </ul>
-          <div className="mt-4">
+          <div className={styles.total}>
             <h5>Total Price: ₹{calculateTotalPrice()}</h5>
           </div>
-          <div className="mt-4 d-flex flex-column align-items-center">
-            <button className="btn btn-success" onClick={handleCheckout}>
-              Check Out
-            </button>
+          <div>
+            <button onClick={handleCheckout}>Check Out</button>
           </div>
         </div>
       )}
-      <div className="mt-4 d-flex justify-content-center">
-        <button className="btn btn-primary" onClick={handleGoToShopping}>
+      <div className={styles.shop}>
+        <button className={styles.primary} onClick={handleGoToShopping}>
           Go to Shopping
         </button>
       </div>
@@ -147,33 +116,29 @@ const Cart = () => {
       >
         <h2 style={{ color: "black" }}>Payment:</h2>
         <p style={{ color: "magenta" }}>Select a payment method:</p>
-        <div className="d-flex-column">
+        <div className={styles.middle}>
           <button
-            className="btn btn-primary m-2"
+            className={styles.card}
+            style={{ width: "200px", backgroundColor: "gray" }}
             onClick={() => setPaymentMethod("card")}
           >
             Card Payment
           </button>
 
           <button
-            className="btn btn-secondary m-2"
+            className={styles.upi}
+            style={{ width: "200px", margin: "5px" }}
             onClick={() => setPaymentMethod("upi")}
           >
             UPI Payment
           </button>
 
-          <div
-            className="d-flex flex-column mt-2"
-            style={{ marginRight: "30px" }}
-          >
-            <button
-              className="btn btn-success mt-2"
-              onClick={handlePaymentSuccess}
-            >
+          <div style={{ width: "100px" }}>
+            <button className={styles.payment} onClick={handlePaymentSuccess}>
               Confirm Payment
             </button>
             <button
-              className="btn btn-danger mt-2"
+              className={styles.cancel}
               onClick={() => setPaymentOpen(false)}
             >
               Cancel

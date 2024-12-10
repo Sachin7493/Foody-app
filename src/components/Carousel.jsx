@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import styles from "./Carousel.module.css";
 
 const Carousel = ({ onSearch }) => {
   const [categories, setCategories] = useState([]);
@@ -37,17 +38,12 @@ const Carousel = ({ onSearch }) => {
           <div className="carousel-caption" style={{ zIndex: "10" }}>
             <form className="d-flex" onSubmit={handleSearch}>
               <input
-                className="form-control me-2"
                 type="search"
                 placeholder="Search"
-                aria-label="Search"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
-              <button
-                className="btn btn-outline-success text-white bg-success"
-                type="submit"
-              >
+              <button className={styles.search} type="submit">
                 Search
               </button>
             </form>
